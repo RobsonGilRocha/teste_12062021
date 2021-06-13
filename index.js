@@ -4,10 +4,19 @@ const utils = require('./utils');
 
 async function app() {          
   const pontos = await csv({delimiter: ";"}).fromFile('pontos_taxi.csv'); 
-  let op = 0;
+  let op = 0 
   let enter = 0;
-  let lat = -30.023927;
-  let long = -51.219871;
+  let lat = 0;       //-30.023927;
+  let long = 0;      //-51.219871;
+  let limitgeo = [-29.855968,-30.285812,-50.981312,-51.367795];
+
+/* lat maxima norte  -29.855968
+   lat CENTRO        -30.023927
+   lat maxima sul    -30.285812
+   long maxima leste -50.981312
+   long CENTRO       -51.219871
+   long maxima oeste -51.367795
+*/
   
   while(true) {   
     console.log('=== MENU ===');
@@ -25,13 +34,29 @@ async function app() {
 
     } else if(op == 2) {    
         console.log('Informe sua localização:');
-        lat = readlineSync.question('Digite sua latitude: ');  
-        long = readlineSync.question('Digite sua longitude: ');
-        console.log('Localização armazenada.\n');
-        enter = readlineSync.question('Aperte qualquer tecla para continuar.');
+                lat = readlineSync.question('Digite sua latitude: ');  
+                long = readlineSync.question('Digite sua longitude: ');
+         if (lat < limitgeo[0] && lat > limitgeo[1]  &&  long < limitgeo[2]  && long > limitgeo[3]) /* certo */{    
+            console.log(`\nSua localizaão é ,latidude ${lat}`,` e lontitude ${long}`);
+            enter = readlineSync.question('Aperte qualquer tecla para continuar.\n');
+          } else {    
+            console.log('\nDados invalidos');
+            console.log('   Siga o exemplo para prencher os dados');
+            console.log('   corretamente, latitude: \"-30.023927\", ');
+            console.log('   longitude \"-51.219871\", qualquer outro valor não é valido');
+            console.log('   qualquer outro valor não é valido');
+            enter = readlineSync.question('\nAperte qualquer tecla para continuar.\n');
+          }
+
 
     } else if (op == 3) {    
         if (lat === null || long === null) {    
+            console.log('Informe sua localização primeiro');
+            enter = readlineSync.question('Aperte qualquer tecla para continuar.');
+          } else if (lat === null || long === null) {    
+            console.log('Informe sua localização primeiro');
+            enter = readlineSync.question('Aperte qualquer tecla para continuar.');
+          } else if (lat === null || long === null) {    
             console.log('Informe sua localização primeiro');
             enter = readlineSync.question('Aperte qualquer tecla para continuar.');
           } else {
@@ -59,13 +84,19 @@ async function app() {
         pontosBuscados.forEach(ponto => console.log(ponto.nome));
         enter = readlineSync.question('Aperte qualquer tecla para continuar.');
 
-    } else if (op !== 5) {    
-        console.log(' \n Digite uma opção valida! ',`${op}`,' não é opção valida \n \n ');
+    } else if (op <= 0 || op >= 6 ) {    
+        console.log(' \n  nunberDigite uma opção valida! ',`${op}`,' não é opção valida \n \n ');
         enter = readlineSync.question('Aperte qualquer tecla para continuar.');
           
-    } else if (op == 5){
+    } else if (op !== 5 && op !== "5" && op != 5 && op != "5"){
+        console.log(' \nDigite uma opção valida! ',`${op}`,' não é opção valida \n \n ');
+        enter = readlineSync.question('Aperte qualquer tecla para continuar.');
+    } else if (op == "5" || op == 5){
         console.log(' \n Fim da aplicação \n \n ');
-        break  
+         break
+    } else  {
+        console.log(' \n Fim da aplicação \n \n ');
+         app(false) 
     }
              
     }
