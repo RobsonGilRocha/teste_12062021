@@ -22,10 +22,30 @@ async function app() {
       pontos.forEach(ponto => console.log(ponto.nome)) 
 
     } else if(op == 2) {    
-       console.log(op, "foi selecionada")
+        console.log('Informe sua localização:') 
+        lat = readlineSync.question('Digite sua latitude: ')  
+        long = readlineSync.question('Digite sua longitude: ') 
+        console.log('Localização armazenada.') 
 
     } else if (op == 3) {    
-        console.log(op, "foi selecionada")
+        if (lat === null || long === null) {    
+            console.log('Informe sua localização primeiro')  
+          } else {
+            console.log('Os pontos de taxi mais próximos são:') 
+    
+            const pontosProximos = []
+            pontos.forEach(ponto => { 
+              pontosProximos.push({ 
+                ...ponto, 
+                distancia: utils.haversine(  
+                  [parseFloat(lat), parseFloat(long)], 
+                  [parseFloat(ponto.latitude.replace(",", ".")), parseFloat(ponto.longitude.replace(",", "."))]  
+                )
+              })
+            })
+    
+            pontosProximos.sort(utils.comparaDistancia).slice(0, 3).forEach(ponto => console.log(`${ponto.nome} (${ponto.distancia}km)`)) 
+          }
 
     } else if (op == 4) {      
         console.log(op, "foi selecionada")  
