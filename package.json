@@ -1,0 +1,12 @@
+{
+  "name": "teste12062021",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Robson Gil Rocha",
+  "license": "ISC",
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "readline-sync": "^1.4.10"
+  }
+}
