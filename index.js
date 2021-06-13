@@ -33,8 +33,6 @@ function app(){
             console.log(op, "foi selecionada")  
       
           }
-        
-          
           break
     }
 
