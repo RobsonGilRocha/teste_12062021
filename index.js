@@ -25,7 +25,7 @@ async function app() {
         console.log('Informe sua localização:') 
         lat = readlineSync.question('Digite sua latitude: ')  
         long = readlineSync.question('Digite sua longitude: ') 
-        console.log('Localização armazenada.') 
+        console.log('Localização armazenada.\n') 
 
     } else if (op == 3) {    
         if (lat === null || long === null) {    
@@ -48,12 +48,15 @@ async function app() {
           }
 
     } else if (op == 4) {      
-        console.log(op, "foi selecionada")  
+        let busca = readlineSync.question('Digite todo ou parte do nome do logradouro: ') 
+        console.log(`Os pontos de taxi ao longo de ${busca.toUpperCase()} são:`)            
+        const pontosBuscados = pontos.filter(ponto => ponto.logradouro.includes(busca.toUpperCase()))
+        pontosBuscados.forEach(ponto => console.log(ponto.nome))  
 
     } else if (op == 5) {    
-        console.log(op, "foi selecionada")     
+        console.log(' \n Fim da aplicação \n \n ')
+        break  
              }
-      break  
     }
     
 }
