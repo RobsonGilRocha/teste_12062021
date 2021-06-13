@@ -39,7 +39,7 @@ async function app() {          // aplicação em si. Função principal
                 lat = readlineSync.question('Digite sua latitude: ');  //exibe na tela e input do usuario
                 long = readlineSync.question('Digite sua longitude: ');//exibe na tela e input do usuario
          if (lat < limitgeo[0] && lat > limitgeo[1]  &&  long < limitgeo[2]  && long > limitgeo[3]){    
-            console.log(`\nSua localizaão é ,latidude ${lat}`,` e lontitude ${long}`);
+            console.log(`\nSua localizaão é ,latidude ${lat}`,` e lontitude ${long}`); //exibe na tela e mostra o input do usuario
             enter = readlineSync.question('Aperte qualquer tecla para continuar.\n'); //exibe na tela e input do usuario
           } else {    
             console.log('\nDados invalidos');//exibe na tela
@@ -47,7 +47,7 @@ async function app() {          // aplicação em si. Função principal
             console.log('   corretamente, latitude: \"-30.023927\", ');//exibe na tela
             console.log('   longitude \"-51.219871\", qualquer outro valor não é valido');//exibe na tela
             console.log('   qualquer outro valor não é valido');//exibe na tela
-            enter = readlineSync.question('\nAperte qualquer tecla para continuar.\n');//exibe na tela
+            enter = readlineSync.question('\nAperte qualquer tecla para continuar.\n');//exibe na tela e input do usuario
           }
 
 
@@ -64,27 +64,27 @@ async function app() {          // aplicação em si. Função principal
           } else {
             console.log('Os pontos de taxi mais próximos são:'); //exibe na tela
     
-            const pontosProximos = []
-            pontos.forEach(ponto => { 
-              pontosProximos.push({ 
+            const pontosProximos = [] //variavel tipo lista para a função abaixo 
+            pontos.forEach(ponto => {  /* função percorre a lista acessa o arquivo utils.js */ 
+              pontosProximos.push({ /*  adiciona novas variaveis na lista */ 
                 ...ponto, 
-                distancia: utils.haversine(  
-                  [parseFloat(lat), parseFloat(long)], 
-                  [parseFloat(ponto.latitude.replace(",", ".")), parseFloat(ponto.longitude.replace(",", "."))]  
+                distancia: utils.haversine(    /*   acessa a Função haversine no arquivo utils.js */
+                  [parseFloat(lat), parseFloat(long)], /* corrige ponto e virgula na lontidude e longitude */
+                  [parseFloat(ponto.latitude.replace(",", ".")), parseFloat(ponto.longitude.replace(",", "."))]   /* corrige ponto e virgula na lontidude e longitude */
                 )
               })
             })
     
-            pontosProximos.sort(utils.comparaDistancia).slice(0, 3).forEach(ponto => console.log(`${ponto.nome} (${ponto.distancia}km)`))
-            enter = readlineSync.question('Aperte qualquer tecla para continuar.');
+            pontosProximos.sort(utils.comparaDistancia).slice(0, 3).forEach(ponto => console.log(`${ponto.nome} (${ponto.distancia}km)`)) /* pega os tres pontos proximos & pontos e distancias & exibe na tela */
+            enter = readlineSync.question('Aperte qualquer tecla para continuar.'); // exibe na tela
           }
 
     } else if (op == 4) {     //Menu opção 
-        let busca = readlineSync.question('Digite todo ou parte do nome do logradouro: ');
-        console.log(`Os pontos de taxi ao longo de ${busca.toUpperCase()} são:`);          
-        const pontosBuscados = pontos.filter(ponto => ponto.logradouro.includes(busca.toUpperCase()));
-        pontosBuscados.forEach(ponto => console.log(ponto.nome));
-        enter = readlineSync.question('Aperte qualquer tecla para continuar.');
+        let busca = readlineSync.question('Digite todo ou parte do nome do logradouro: ');// exibe na tela  & pega o input do usuario
+        console.log(`Os pontos de taxi ao longo de ${busca.toUpperCase()} são:`);        // exibe na tela  & mostra o input do usuario   
+        const pontosBuscados = pontos.filter(ponto => ponto.logradouro.includes(busca.toUpperCase())); // filtra os pontos proximos usando como paramento o input do usuario do input do usuario
+        pontosBuscados.forEach(ponto => console.log(ponto.nome));  // exibe na tela  & mostrar os pontos perto do input do usuario
+        enter = readlineSync.question('Aperte qualquer tecla para continuar.'); // exibe na tela
 
     } else if (op <= 0 || op >= 6 ) {   //Menu opção invalida 
         console.log(' \n  nunberDigite uma opção valida! ',`${op}`,' não é opção valida \n \n ');//exibe na tela
