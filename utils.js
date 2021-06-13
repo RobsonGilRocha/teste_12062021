@@ -1,4 +1,4 @@
-exports.haversine = ([lat1, lon1], [lat2, lon2]) => { 
+exports.haversine = ([lat1, lon1], [lat2, lon2]) => { /*  inicio Função haversine */
   // Math lib function names
   const [pi, asin, sin, cos, sqrt, pow, round] = [
       'PI', 'asin', 'sin', 'cos', 'sqrt', 'pow', 'round'
@@ -23,9 +23,10 @@ exports.haversine = ([lat1, lon1], [lat2, lon2]) => {
           )
       ) * 100
   ) / 100;
-}; 
+};  /*  fim Função haversine */
 
-exports.comparaDistancia = (a, b) => { 
+
+exports.comparaDistancia = (a, b) => { /*  fim Função para comparar distancia */
     if ( a.distancia < b.distancia ){
       return -1;
     }
@@ -33,4 +34,4 @@ exports.comparaDistancia = (a, b) => {
       return 1;
     }
     return 0;
-}  
+}  /*  fim Função para comparar distancia */
